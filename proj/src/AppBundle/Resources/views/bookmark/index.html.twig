@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ 'title.bookmarks'|trans }}</h1>
+
+    {% if paginator.currentPageResults is defined and paginator.currentPageResults|length %}
+        {% for bookmark in paginator.currentPageResults %}
+            {% set bookmarkId = ((paginator.currentPage-1) * paginator.maxPerPage) + loop.index0 %}
+            <dl>
+                <dt>{{ 'label.id'|trans }}</dt>
+                <dd>{{ bookmarkId}}</dd>
+                <dt>{{ 'label.url'|trans }}</dt>
+                <dd>{{ bookmark.url }}</dd>
+                <dt>{{ 'label.tags'|trans }}</dt>
+                <dd>
+                    {{ bookmark.tags|tags_filter }}
+                    {#{% for tag in bookmark.tags %}#}
+                        {#<b>{{ tag }}</b>,#}
+                    {#{% endfor %}#}
+                </dd>
+                {#<dd>{{ bookmark.tags|join(', ') }}</dd>#}
+                <dt>{{ 'label.detail'|trans }}</dt>
+                <dd><a href="{{ path('single_bookmark', {'id': bookmarkId } ) }}">details</a> </dd>
+            </dl>
+        {% endfor %}
+
+        <div class="pagerfanta">
+            {{ pagerfanta(paginator) }}
+        </div>
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+{% endblock %}

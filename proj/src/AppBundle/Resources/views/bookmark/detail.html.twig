@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ bookmark.url }}
+    <p> {{ bookmark.tags|join(', ') }}</p>
+
+    <a href="{{ path('bookmark_index') }}"> {{ 'return'|trans }}</a>
+{% endblock %}
+
